@@ -14,8 +14,8 @@ public class Holgersson {
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		TextProcessor p = new SingleWordCounter("nils");
-
-		Scanner s = new Scanner(new File("nilsholg.txt"));
+		
+		Scanner s  = new Scanner(new File("edaa30ht22-workspace/lab2/nilsholg.txt"));
 		s.findWithinHorizon("\uFEFF", 1);
 		s.useDelimiter("(\\s|,|\\.|:|;|!|\\?|'|\\\")+"); // se handledning
 
