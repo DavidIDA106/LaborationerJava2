@@ -42,19 +42,21 @@ public class Holgersson {
 		s.findWithinHorizon("\uFEFF", 1);
 		s.useDelimiter("(\\s|,|\\.|:|;|!|\\?|'|\\\")+"); // se handledning
 
+		long t0 = System.nanoTime();
 		while (s.hasNext()) {
 			String word = s.next().toLowerCase();
 			//list.get(0).process(word);
 			list.forEach((a) -> a.process(word));
-			
-
 		}
-
+		long t1 = System.nanoTime();
+		
 		s.close();
-
+		
 		p.report();
 		n.report();
 		multi.report();
 		r.report();
+		
+		System.out.println("tid: " + (t1 - t0) / 1000000.0 + " ms");
 	}
 }

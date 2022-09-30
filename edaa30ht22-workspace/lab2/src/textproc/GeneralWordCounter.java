@@ -1,18 +1,18 @@
 package textproc;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeMap;
 import java.io.FileNotFoundException;
 
 public class GeneralWordCounter implements TextProcessor {
     private Set s;
     private  Map<String, Integer> m;
     public GeneralWordCounter(Set s) throws FileNotFoundException{
-        m = new HashMap<>();
+        m = new TreeMap<>();
         this.s = s;
     }
 
@@ -31,11 +31,24 @@ public class GeneralWordCounter implements TextProcessor {
 
     @Override
     public void report() {
-        for(String key : m.keySet()){
-            if(m.get(key) >= 200){
-                System.out.println(key + " " + m.get(key));
+        Set<Map.Entry<String, Integer>> wordSet = m.entrySet();
+        List<Map.Entry<String, Integer>> wordList = new ArrayList<>(wordSet);
+        wordList.sort((w1, w2) -> {
+            if(w1.getValue().equals(w2.getValue())) {
+                return w1.getKey().compareTo(w2.getKey());
             }
+            else {
+            return w2.getValue() - w1.getValue();}});
+
+        for(int i=0; i<20; i++) {
+            System.out.println(wordList.get(i).getKey() + " " + wordList.get(i).getValue());
         }
+
+        // for(String key : m.keySet()){
+        //     if(m.get(key) >= 200){
+        //         System.out.println(key + " " + m.get(key));
+        //     }
+        // }
     }
     
 }
