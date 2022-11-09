@@ -46,7 +46,7 @@ public class Holgersson {
 		while (s.hasNext()) {
 			String word = s.next().toLowerCase();
 			//list.get(0).process(word);
-			list.forEach((a) -> a.process(word));
+			list.forEach(a -> a.process(word));
 		}
 		long t1 = System.nanoTime();
 		
