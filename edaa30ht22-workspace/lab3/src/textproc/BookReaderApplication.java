@@ -4,10 +4,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 public class BookReaderApplication {
     
@@ -25,22 +27,18 @@ public class BookReaderApplication {
 			stopwords.add(word);
 		}
 
-        //List<TextProcessor> list = new ArrayList<TextProcessor>();
-        JList wordList = new JList<>();
         GeneralWordCounter r = new GeneralWordCounter(stopwords);
-        BookReaderController window = new BookReaderController(r);
-
-        //list.add(r);
-
+        
+        
         s.findWithinHorizon("\uFEFF", 1);
 		s.useDelimiter("(\\s|,|\\.|:|;|!|\\?|'|\\\")+"); // se handledning
-
+        
 		while (s.hasNext()) {
-			String word = s.next().toLowerCase();
-			//list.forEach(a -> a.process(word));
+            String word = s.next().toLowerCase();
+            r.process(word);
 		}
-
-		
+        BookReaderController window = new BookReaderController(r);
+        
 		s.close();
         scan.close();
     }
