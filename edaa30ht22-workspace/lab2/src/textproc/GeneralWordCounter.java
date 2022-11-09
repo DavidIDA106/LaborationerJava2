@@ -33,14 +33,14 @@ public class GeneralWordCounter implements TextProcessor {
     public void report() {
         Set<Map.Entry<String, Integer>> wordSet = m.entrySet();
         List<Map.Entry<String, Integer>> wordList = new ArrayList<>(wordSet);
+
         wordList.sort((w1, w2) -> {
             if(w1.getValue().equals(w2.getValue())) {
-                return w1.getKey().compareTo(w2.getKey());
-            }
+                return w1.getKey().compareTo(w2.getKey());}
             else {
             return w2.getValue() - w1.getValue();}});
 
-        for(int i=0; i<20; i++) {
+        for(int i=0; i<5; i++) {
             System.out.println(wordList.get(i).getKey() + " " + wordList.get(i).getValue());
         }
 
@@ -49,6 +49,12 @@ public class GeneralWordCounter implements TextProcessor {
         //         System.out.println(key + " " + m.get(key));
         //     }
         // }
+    }
+
+    public List<Map.Entry<String, Integer>> getWordList() {
+        Set<Map.Entry<String, Integer>> wordSet = m.entrySet();
+        List<Map.Entry<String, Integer>> wordList = new ArrayList<>(wordSet);
+        return wordList;
     }
     
 }
