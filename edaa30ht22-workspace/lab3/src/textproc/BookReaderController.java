@@ -8,10 +8,14 @@ import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
 
 public class BookReaderController {
 
@@ -41,6 +45,7 @@ public class BookReaderController {
             alph.addActionListener(e -> slm.sort(alphComp));
             freq.addActionListener(e -> slm.sort(freqComp));
             find.addActionListener(e -> {
+                boolean found = false;
                 for(int i = 0; i < slm.getSize(); i++){
                     //Nedan görs v1
                     String findWord = text.getText().toLowerCase().trim();
@@ -48,14 +53,26 @@ public class BookReaderController {
                     if(slm.getElementAt(i).getKey().equals(findWord)){
                         wordList.ensureIndexIsVisible(i);
                         wordList.setSelectedIndex(i);
+                        found = true;
                         break;
                     }
+
+                }
+                //v2
+                if(!found){
+                    JOptionPane errWindow = new JOptionPane();
+                    errWindow.showMessageDialog(frame, "Could not find word", "Error", 0);
                 }
             });
 
-            text.addActionListener(e -> {
+            //v3
+            text.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                find.doClick();
+                System.out.println("hejhej");
+            }
                 
-            });
+           });
             panel.add(freq);
             panel.add(alph);
             panel.add(text);
