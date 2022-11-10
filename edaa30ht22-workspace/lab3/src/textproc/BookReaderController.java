@@ -30,7 +30,7 @@ public class BookReaderController {
             JButton alph = new JButton("Alphabetically");
             JTextField text = new JTextField("", 18);
             JButton find = new JButton("Find");
-            SortedListModel slm = new SortedListModel<>(counter.getWordList());
+            SortedListModel<Map.Entry<String, Integer>> slm = new SortedListModel<>(counter.getWordList());
             JList<SortedListModel> wordList = new JList(slm);
             JScrollPane scroller = new JScrollPane(wordList);
 
@@ -42,13 +42,20 @@ public class BookReaderController {
             freq.addActionListener(e -> slm.sort(freqComp));
             find.addActionListener(e -> {
                 for(int i = 0; i < slm.getSize(); i++){
-                    String findWord = text.getText();
-                    if(slm.getElementAt(i).toString().contains(findWord)){
-
+                    //Nedan görs v1
+                    String findWord = text.getText().toLowerCase().trim();
+                    
+                    if(slm.getElementAt(i).getKey().equals(findWord)){
+                        wordList.ensureIndexIsVisible(i);
+                        wordList.setSelectedIndex(i);
+                        break;
                     }
-                };
-                wordList.ensureIndexIsVisible(60);}
-            );
+                }
+            });
+
+            text.addActionListener(e -> {
+                
+            });
             panel.add(freq);
             panel.add(alph);
             panel.add(text);
