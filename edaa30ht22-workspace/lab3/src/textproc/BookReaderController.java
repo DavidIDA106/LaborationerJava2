@@ -28,7 +28,7 @@ public class BookReaderController {
             JPanel panel = new JPanel();
             JButton freq = new JButton("Frequency");
             JButton alph = new JButton("Alphabetically");
-            JTextField text = new JTextField("Search");
+            JTextField text = new JTextField("", 18);
             JButton find = new JButton("Find");
             SortedListModel slm = new SortedListModel<>(counter.getWordList());
             JList<SortedListModel> wordList = new JList(slm);
@@ -37,8 +37,18 @@ public class BookReaderController {
 
             Comparator<Map.Entry<String, Integer>> alphComp = (e1, e2) -> e1.getKey().compareTo(e2.getKey());
             Comparator<Map.Entry<String, Integer>> freqComp = (e1, e2) -> e2.getValue() - e1.getValue();
+            
             alph.addActionListener(e -> slm.sort(alphComp));
             freq.addActionListener(e -> slm.sort(freqComp));
+            find.addActionListener(e -> {
+                for(int i = 0; i < slm.getSize(); i++){
+                    String findWord = text.getText();
+                    if(slm.getElementAt(i).toString().contains(findWord)){
+
+                    }
+                };
+                wordList.ensureIndexIsVisible(60);}
+            );
             panel.add(freq);
             panel.add(alph);
             panel.add(text);
@@ -48,11 +58,6 @@ public class BookReaderController {
             pane.setLayout(new BorderLayout(20, 15));
             pane.add(scroller);
             pane.add(panel, BorderLayout.SOUTH);
-
-            
-            
-            // pane är en behållarkomponent till vilken de övriga komponenterna
-            //(listvy, knappar etc.) ska läggas till.
 
             frame.pack();
             frame.setVisible(true);
