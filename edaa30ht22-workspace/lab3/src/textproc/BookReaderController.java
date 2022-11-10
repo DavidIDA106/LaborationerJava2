@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 public class BookReaderController {
@@ -27,20 +28,21 @@ public class BookReaderController {
             JPanel panel = new JPanel();
             JButton freq = new JButton("Frequency");
             JButton alph = new JButton("Alphabetically");
+            JTextField text = new JTextField("Search");
+            JButton find = new JButton("Find");
             SortedListModel slm = new SortedListModel<>(counter.getWordList());
             JList<SortedListModel> wordList = new JList(slm);
             JScrollPane scroller = new JScrollPane(wordList);
 
-            freq.addActionListener(e -> {
-                System.out.println("frequency motherfucker");
-            });
 
             Comparator<Map.Entry<String, Integer>> alphComp = (e1, e2) -> e1.getKey().compareTo(e2.getKey());
             Comparator<Map.Entry<String, Integer>> freqComp = (e1, e2) -> e2.getValue() - e1.getValue();
-            alph.addActionListener(e -> {slm.sort(alphComp);});
-            freq.addActionListener(e -> {slm.sort(freqComp);});
+            alph.addActionListener(e -> slm.sort(alphComp));
+            freq.addActionListener(e -> slm.sort(freqComp));
             panel.add(freq);
             panel.add(alph);
+            panel.add(text);
+            panel.add(find);
 
 
             pane.setLayout(new BorderLayout(20, 15));
