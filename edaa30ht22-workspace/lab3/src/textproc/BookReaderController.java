@@ -69,7 +69,6 @@ public class BookReaderController {
             text.addActionListener(new java.awt.event.ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 find.doClick();
-                System.out.println("hejhej");
             }
                 
            });
