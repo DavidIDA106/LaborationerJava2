@@ -19,11 +19,11 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 	 * 			to this queue, else false
 	 */
 	public boolean offer(E e) {
-		QueueNode<E> q = new QueueNode<E>(e);
+		QueueNode<E> q = new QueueNode<>(e);
 		if(last == null) {
 			q.next = q;
 		} else {
-			q.next = last;
+			q.next = last.next;
 			last.next = q;
 
 		}
@@ -98,7 +98,7 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 
 		private QueueNode<E> pos;
 
-		private void QueueIterator(){
+		private QueueIterator(){
 			pos = (last != null) ? last.next : null;
 		}
 
