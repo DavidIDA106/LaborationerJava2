@@ -39,11 +39,11 @@ public class BookReaderController {
             JScrollPane scroller = new JScrollPane(wordList);
 
 
-            Comparator<Map.Entry<String, Integer>> alphComp = (e1, e2) -> e1.getKey().compareTo(e2.getKey());
-            Comparator<Map.Entry<String, Integer>> freqComp = (e1, e2) -> e2.getValue() - e1.getValue();
+            //Comparator<Map.Entry<String, Integer>> alphComp = (e1, e2) -> e1.getKey().compareTo(e2.getKey());
+            //Comparator<Map.Entry<String, Integer>> freqComp = (e1, e2) -> e2.getValue() - e1.getValue();
             
-            alph.addActionListener(e -> slm.sort(alphComp));
-            freq.addActionListener(e -> slm.sort(freqComp));
+            alph.addActionListener(e -> slm.sort((e1, e2) -> e1.getKey().compareTo(e2.getKey())));
+            freq.addActionListener(e -> slm.sort((e1, e2) -> e2.getValue() - e1.getValue()));
             find.addActionListener(e -> {
                 boolean found = false;
                 for(int i = 0; i < slm.getSize(); i++){
