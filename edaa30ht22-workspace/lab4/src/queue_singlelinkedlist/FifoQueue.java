@@ -19,16 +19,16 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 	 * 			to this queue, else false
 	 */
 	public boolean offer(E e) {
-		QueueNode<E> q = new QueueNode<>(e);
-		if(last == null) {
-			q.next = q;
-		} else {
-			q.next = last.next;
+		QueueNode<E> q = new QueueNode<>(e);   	//skapar den nya noden som ska sättas in 
+		if(last == null) {						//pekar på sig själv när endast 1 nod i listan
+			q.next = q; 						
+		} else {								//q är nya sista elementet så då vill vi att next ska peka på det första
+			q.next = last.next;					//last.next är gamla sista då ska den peka på q
 			last.next = q;
 
 		}
-		last = q;
-		size++;
+		last = q; 								//sätter att last blir q som är det senaste noden i listan
+		size++; 								//öka storleken
 		return true;
 	}
 	
@@ -60,17 +60,17 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 	 * @return 	the head of this queue, or null if the queue is empty 
 	 */
 	public E poll() {
-	    E element = null;
+	    E element = null; 					//används som en hjälp variabel för att ta ut rätt element
 	    if (last != null) {
-	        element = last.next.element;
+	        element = last.next.element;  	//elementet sätts till elementet i first
 
-	        if (last.next == last) {
+	        if (last.next == last) { 		//om det enbart är 1 nod i listan så ska noden nollställas när listan ska bli tom
 	            last = null;
             } else {
-	            last.next = last.next.next;
+	            last.next = last.next.next;	//om inte så länkar man last.next till det andra objektet i listan så att det första klipps
             }
 
-            size--;
+            size--;							//minska storleken på listan
         }
 
 		return element;
@@ -96,47 +96,53 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 
 	private class QueueIterator implements Iterator<E>{
 
-		private QueueNode<E> pos;
+		private QueueNode<E> pos; 						//hjälp nod för att hållla reda på positionen
 
 		private QueueIterator(){
-			pos = (last != null) ? last.next : null;
+			if(last != null) {							//checkar om listan är tom, om inte sätts pos till first
+				pos = last.next;
+			}
+			else {
+				pos = null;
+			}
+				
 		}
 
-		public boolean hasNext(){
+		public boolean hasNext(){						//snabb check för att se om listan blivit tom
 			return pos != null;
 		}
 
 		public E next(){
-			if (hasNext()) {
+			if (hasNext()) {							//om det finns noder kvar så sätter vi elementet till pos elementet
 	            E element = pos.element;
-	            if (pos != last) {
+	            if (pos != last) {						//om pos ej är sista noden i listan hoppar den till nästa annars nollställs
 	                pos = pos.next;
                 } else {
 	                pos = null;
                 }
                 return element;
             } else {
-	            throw new NoSuchElementException();
+	            throw new NoSuchElementException();		//ifall hasNext är tom ska inget göras
             }
 		}
 		
 	}
 
 		public void append(FifoQueue<E> q) {
-			if (q != this) {
-				if (q.last != null) {
-					QueueNode<E> last_node = q.last;
-					QueueNode<E> first_node = q.last.next;
+			if (q != this) {								//checka att man inte försöker appenda samma kö som redan arbetas med
+				if (q.last != null) {						//checka så listan ej är tom
+					QueueNode<E> last_node = q.last;		//temp var för att överföra q till this
+					QueueNode<E> first_node = q.last.next;	//--||--
 	
-					if (last != null) {
+					if (last != null) {						//länka ihop de sista och första elementen
 						last_node.next = last.next;
 						last.next = first_node;
 					}
 	
-					last = last_node; // Point to the new end of the list
-					size += q.size; // Update size
+					last = last_node; //  Pekar till nya list enden
+					size += q.size; // Uppdaterar storleken
 	
-					// Reset queue
+					// nollställter q
 					q.last = null;
 					q.size = 0;
 				}
