@@ -29,6 +29,7 @@ public class Mountain extends Fractal {
         Side s = new Side(a, b);
         if(map.containsKey(s) ) {
             Point temp = map.get(s);
+            map.remove(s);
             return temp;
         }
 
