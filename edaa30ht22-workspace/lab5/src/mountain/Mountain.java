@@ -20,23 +20,25 @@ public class Mountain extends Fractal {
 
     @Override
     public void draw(TurtleGraphics turtle) {
-		turtle.moveTo(a.getX(), a.getY());
+        turtle.moveTo(a.getX(), a.getY());
+		fractalLine(turtle, order, a, b, c);
+        /*turtle.moveTo(a.getX(), a.getY());
 		fractalLine(turtle, order, Math.hypot((b.getX()-a.getX()), (b.getY()-a.getY())), (int)Math.toDegrees(Math.atan2(b.getY()-a.getY(), b.getX()-a.getX()) * 180 / Math.PI));
 		fractalLine(turtle, order, Math.hypot((c.getX()-b.getX()), (c.getY()-b.getY())), (int)Math.toDegrees(Math.atan2(c.getY()-b.getY(), c.getX()-b.getX()) * 180 / Math.PI));
-		fractalLine(turtle, order, Math.hypot((a.getX()-c.getX()), (a.getY()-c.getY())), (int)Math.toDegrees(Math.atan2(a.getY()-c.getY(), a.getX()-c.getX()) * 180 / Math.PI)); 
+		fractalLine(turtle, order, Math.hypot((a.getX()-c.getX()), (a.getY()-c.getY())), (int)Math.toDegrees(Math.atan2(a.getY()-c.getY(), a.getX()-c.getX()) * 180 / Math.PI)); */
 	}
 
-    private void fractalLine(TurtleGraphics turtle, int order, double length, int alpha) {
+    private void fractalLine(TurtleGraphics turtle, int order, Point a, Point b, Point c) {
 		if (order == 0) {
-			turtle.penDown();
-			turtle.setDirection(alpha);
-			turtle.forward(length);
-			turtle.penUp();
+			turtle.moveTo(a.getX(), a.getY());
+		    turtle.forwardTo(b.getX(), b.getY());
+		    turtle.forwardTo(c.getX(), c.getY());
+		    turtle.forwardTo(a.getX(), a.getY());
 			} else {
-			fractalLine(turtle, order-1, length/3, alpha);
-			fractalLine(turtle, order-1, length/3, alpha-60);
-			fractalLine(turtle, order-1, length/3, alpha+60);
-			fractalLine(turtle, order-1, length/3, alpha);
+                fractalLine(turtle, order - 1, a, b, c);
+                fractalLine(turtle, order - 1, a, b, c);
+                fractalLine(turtle, order - 1, a, b, c);
+                fractalLine(turtle, order - 1, a, b, c);
 			}
 			
 	}
