@@ -8,11 +8,30 @@ public class BinarySearchTree<E> {
   BinaryNode<E> root;  // Används också i BSTVisaulizer
   int size;            // Används också i BSTVisaulizer
   private Comparator<E> comparator;
+
+  public static void main(String[] args) {
+	//BSTVisualizer bst = new BSTVisualizer("BinaryTree", 400, 400);
+	BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+	tree.add(5);
+	tree.add(10);
+	tree.add(117);
+	tree.add(120);
+	tree.add(8);
+	tree.add(3);
+	tree.add(5);
+	tree.add(8);
+	tree.add(5);
+	tree.printTree();
+	//tree.rebuild();
+	//bst.drawTree(tree);
+
+   }
     
 	/**
 	 * Constructs an empty binary search tree.
 	 */
 	public BinarySearchTree() {
+		comparator = (e1, e2) -> ((Comparable<E>)e1).compareTo(e2);
 		root = null;
 		size = 0;
 	}
@@ -32,64 +51,57 @@ public class BinarySearchTree<E> {
 	 * @return true if the the element was inserted
 	 */
 	public boolean add(E x) {
-		if(size == 0) {
+		return add(root, x);
+	}
+
+	private boolean add(BinaryNode<E> n, E x) {
+		if (n == null) {
 			root = new BinaryNode<E>(x);
 			size++;
 			return true;
+		} else if (n.element == x) {
+			return false;
+		} else if (comparator.compare(x, n.element) > 0) {
+			if (n.right != null) {
+				return add(n.right, x);
+			} else {
+				n.right = new BinaryNode<E>(x);
+				size++;
+				return true;
+			}
+		} else if (comparator.compare(x, n.element)  < 0) {
+			if (n.left != null) {
+				return add(n.left, x);
+			} else {
+				n.left = new BinaryNode<E>(x);
+				size++;
+				return true;
+			}
 		}
-		BinaryNode<E> n = addCalc(root, x);
-		if(n != null) {
-			n = new BinaryNode<E>(x);
-			size++;
-			return true;
-		}
-		
 		return false;
 	}
-
-	private BinaryNode<E> addCalc(BinaryNode<E> n, E x) {
-		if(n.left ==null && n.right == null && comparator.compare(n.element, x) == -1) {
-			return n.right;
-		}
-		else if(n.left ==null && n.right == null && comparator.compare(n.element, x) == 1) {
-			return n.left;
-		}
-		else if(n.element.equals(x)) { 		//eventuellt byta equals till comparator
-			return null;
-		}
-
-		if(comparator.compare(n.element, x) == -1) {
-			addCalc(n.right, x);
-		}
-		else if(comparator.compare(n.element, x) == 1) {
-			addCalc(n.left, x);
-		}
-		return null;
-	} 
 	
 	/**
 	 * Computes the height of tree.
 	 * @return the height of the tree
 	 */
 	public int height() {
-		return calcHeight(root);
+		return height(root);
 	}
+	private int height(BinaryNode<E> n) {
+		if (n == null) {
+	        return 0;
+	    }else {
 
-	private int calcHeight(BinaryNode<E> n) {
-		int countR = 0;
-		int countL = 0;
-		if(size < 2) {
-			return size;
+		    int leftHeight = height(n.left);
+		    int rightHeight = height(n.right);
+	
+		    if (leftHeight > rightHeight) {
+		        return leftHeight + 1;
+		    } else {
+		        return rightHeight + 1;
+		    }
 		}
-		if(n.right != null) {
-			countR++;
-			calcHeight(n.right);
-		}
-		if(n.left != null) {
-			countL++;
-			calcHeight(n.left);
-		}
-		return Math.max(countR, countL);
 	}
 	
 	/**
