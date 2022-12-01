@@ -21,18 +21,14 @@ public class TestBinarySearch{
     }
     
     @Test
-    void treeAdd(){
+    void testAdd(){
         assertTrue(tree.add(3), "Did not return true");
         assertTrue(tree.add(5), "couldnt add another");
         assertFalse(tree.add(3), "Managed to add the same number");
-        
-        
-        assertEquals(2, tree.size(), "Wrong sizenumber");
-
     }
 
     @Test
-    void treeHeight(){
+    void testHeight(){
         assertEquals(0, tree.height(), "Height was not zero");
 
         tree.add(3);
@@ -40,5 +36,29 @@ public class TestBinarySearch{
 
         assertEquals(2, tree.height(), "Height was not 2");
     }
+
+    @Test
+	void testSize() {
+        assertEquals(0, tree.size(), " size is not 0");
+		tree.add(3);
+		tree.add(2);
+		tree.add(0);
+		tree.add(5);
+		tree.add(1);
+		assertTrue(tree.size() == 5, " size is not 5");
+		// tree.printTree();
+	}
+	@Test
+	void testClear() {
+		tree.add(3);
+		tree.add(2);
+		tree.add(5);
+		assertTrue(tree.add(4));
+		assertFalse(tree.add(4));
+		tree.clear();
+		assertTrue(tree.size() == 0);
+		assertTrue(tree.height() == 0);
+		tree.printTree();
+	}
 
 }

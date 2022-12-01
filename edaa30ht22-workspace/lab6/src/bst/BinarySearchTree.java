@@ -10,7 +10,7 @@ public class BinarySearchTree<E> {
   private Comparator<E> comparator;
 
   public static void main(String[] args) {
-	//BSTVisualizer bst = new BSTVisualizer("BinaryTree", 400, 400);
+	BSTVisualizer bst = new BSTVisualizer("BinaryTree", 400, 400);
 	BinarySearchTree<Integer> tree = new BinarySearchTree<>();
 	tree.add(5);
 	tree.add(10);
@@ -22,8 +22,8 @@ public class BinarySearchTree<E> {
 	tree.add(8);
 	tree.add(5);
 	tree.printTree();
-	//tree.rebuild();
-	//bst.drawTree(tree);
+	tree.rebuild();
+	bst.drawTree(tree);
 
    }
     
@@ -138,14 +138,20 @@ public class BinarySearchTree<E> {
 	 * Builds a complete tree from the elements in the tree.
 	 */
 	public void rebuild() {
-
+		ArrayList<E> temp = new ArrayList<E>();
+		toArray(root, temp);
+		root = buildTree(temp, 0, temp.size() - 1);
 	}
 	
 	/*
 	 * Adds all elements from the tree rooted at n in inorder to the list sorted.
 	 */
 	private void toArray(BinaryNode<E> n, ArrayList<E> sorted) {
-	
+		if( n != null) {
+		toArray(n.left, sorted);
+		sorted.add(n.element);
+		toArray(n.right, sorted);
+		}
 	}
 	
 	/*
@@ -155,8 +161,17 @@ public class BinarySearchTree<E> {
 	 * Returns the root of tree.
 	 */
 	private BinaryNode<E> buildTree(ArrayList<E> sorted, int first, int last) {
-		return null;
+		if (first > last) { 
+            return null; 
+        } 
+		int mid = (first + last) / 2;
+		BinaryNode<E> temp = new BinaryNode<E>(sorted.get(mid));
+		temp.left = buildTree(sorted,first, mid - 1); 
+		temp.right = buildTree(sorted, mid + 1,last); 
+		return temp;
 	}
+	
+
 
 	static class BinaryNode<E> {
 		E element;
