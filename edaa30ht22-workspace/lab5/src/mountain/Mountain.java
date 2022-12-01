@@ -40,7 +40,6 @@ public class Mountain extends Fractal {
 
     @Override
     public void draw(TurtleGraphics turtle) {
-        turtle.moveTo(a.getX(), a.getY());
 		fractalLine(turtle, order, a, b, c, dev);
 	}
 
